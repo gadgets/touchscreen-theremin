@@ -1,0 +1,43 @@
+/*******************************
+            Global
+*******************************/
+
+html,
+body {
+    font-size: 15px;
+    height: 100%;
+}
+
+body {
+    font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    background: #e3e3e3;
+    margin: 0px;
+    padding: 0px;
+    color: #555555;
+    text-rendering: optimizeLegibility;
+    min-width: 320px;
+}
+
+.ui.header {
+    font-family: 'Source Sans Pro', "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+
+#keys {
+    background-color: #000;
+    min-height: 60%;
+    width: 100%
+    color: #fff;
+}
+
+.key {
+    width: 2.7%;
+    height: 600px;
+    background-color: #666;
+    border: 1px solid #000;
+    float: right;
+}
+
+.key:hover {
+    background-color: #540000;
+}
