@@ -39,7 +39,7 @@ Theremin.prototype.playing = null;
 Theremin.prototype.level = null;
 Theremin.prototype.last_level = 0;
 Theremin.prototype.last_y = 0;
-Theremin.prototype.tremolo = true;
+Theremin.prototype.tremolo = false;
 Theremin.prototype.screen_width = 0;
 
 Theremin.prototype.start = function() {
@@ -47,19 +47,73 @@ Theremin.prototype.start = function() {
     var self = this;
 
     // setup all of the things to read
+	
+	function writeMessage(canvas, message) {
+		var context = canvas.getContext('2d');
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.font = '18pt Calibri';
+		context.fillStyle = 'black';
+		context.fillText(message, 10, 25);
+	}
+	
+	function getMousePos(canvas, evt) {
+		var rect = canvas.getBoundingClientRect();
+		return {
+			x: evt.clientX - rect.left,
+			y: evt.clientY - rect.top
+		};
+	}
+	
+	function getTouchPos(canvas, evt) {
+		canvas.getBoundingClientRect();
+		 return {
+			x: evt.touches[0].clientX - rect.left,
+			y: evt.touches[0].clientY - rect.top
+		};
+	}
+	
+	var canvas = document.getElementById('canvas');
+	var context = canvas.getContext('2d');
 
-    window.onmousemove = self.readMouse;
-    $(document).keydown(function(event) {
-        if(event.which == 80) {
-            self.play();
-        }
-    });
+	canvas.addEventListener('mousemove', function(evt) {
+		evt.preventDefault();
+		var mousePos = getMousePos(canvas, evt);
+		writeIt(mousePos);
+	}, false);
 
-    $(document).keyup(function(event) {
-        if(event.which == 80) {
-            self.stop();
-        }
-    });
+	canvas.addEventListener("touchmove", function(evt) {
+		evt.preventDefault();
+		console.log(evt);
+		var touch_pos = getTouchPos(canvas, evt);
+		writeIt(touch_pos);
+	}, false);
+
+	function writeIt(mousePos) {
+	var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+	writeMessage(canvas, message);
+	}
+
+	canvas.addEventListener('mousedown', function(evt) {
+	evt.preventDefault();  
+	console.log('clicking the shiz out of me');
+	}, false);
+	
+	/*$("#keys").hover(function(){
+		
+		window.onmousemove = self.readMouse;
+		
+	    $(document).keydown(function(event) {
+	        if(event.which == 80) {
+	            self.play();
+	        }
+	    });
+
+	    $(document).keyup(function(event) {
+	        if(event.which == 80) {
+	            self.stop();
+	        }
+	    });
+	});*/
 
 };
 
@@ -89,18 +143,31 @@ Theremin.prototype.stop = function() {
 Theremin.prototype.readMouse = function(event) {
 
     var self = this;
+	
+	if (theremin.playing == true) {
+		
+		var x = event.clientX;
+		var y = event.clientY;
+		
+		
+		//see if we are in the box
+		var box_right = $('#keys').width();
+		var box_left = $('#keys').offset().left;
+		var box_top = $('#keys').offset().top;
+		
+		if (x <= box_right && x >= box_left) {
+			
+			theremin.frequencyConstraint(x)
+			var percent = (theremin.last_y/$(document).height()) * 100;
+			var new_gain = ((100 - Math.round(percent)) * .01);
+			theremin.level.gain.value = new_gain;
 
-    if (theremin.playing == true) {
+			theremin.last_level = new_gain;
+			theremin.last_y = y;
+			
+		}
 
-        theremin.frequencyConstraint(event.clientX)
-        var percent = (theremin.last_y/$(document).height()) * 100;
-        var new_gain = ((100 - Math.round(percent)) * .01);
-        theremin.level.gain.value = new_gain;
-
-        theremin.last_level = new_gain;
-        theremin.last_y = event.clientY;
-
-    }
+	}
 
 };
 
