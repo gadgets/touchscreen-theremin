@@ -7,6 +7,8 @@ $(function(){
 
     theremin = new Theremin();
     theremin.start();
+	
+	console.log($(document).width());
 
     $(".type-trigger").click(function() {
 		var type = $(this).data('type')
@@ -19,6 +21,7 @@ $(function(){
 function Theremin() {
 
     this.context = new AudioContext(); //webkit browsers only
+	this.tuna = new Tuna(this.context); //
     this.oscillator = this.context.createOscillator();
     this.level = this.context.createGain();
     this.playing = false;
@@ -28,148 +31,161 @@ function Theremin() {
     this.oscillator.frequency.value = 440;
     this.oscillator.start(0);
     this.level.gain.value = 0;
-
-    this.oscillator.connect(this.level);
-    this.level.connect(this.context.destination);
-
+	
+	this.effects.chorus = new this.tuna.Chorus({
+		rate: 1.5,
+		feedback: 0.5,
+		delay: 0.0045,
+		bypass: 0
+	});
+	
+    this.oscillator.connect(this.effects.chorus);
+	
+	this.effects.chorus.connect(this.level);
+	//this.effects.overdrive.connect();
+	
+	this.level.connect(this.context.destination);
+	
 };
 
 Theremin.prototype.oscillator = null;
 Theremin.prototype.playing = null;
 Theremin.prototype.level = null;
-Theremin.prototype.last_level = 0;
-Theremin.prototype.last_y = 0;
+Theremin.prototype.lastLevel = 0;
+Theremin.prototype.lastY = 0;
 Theremin.prototype.tremolo = false;
-Theremin.prototype.screen_width = 0;
+Theremin.prototype.screenWidth = 0;
+Theremin.prototype.canvas = null;
+Theremin.prototype.tuna = null;
+Theremin.prototype.effects = {};
+Theremin.prototype.context = 0;
 
 Theremin.prototype.start = function() {
 
     var self = this;
 
-    // setup all of the things to read
-	
-	function writeMessage(canvas, message) {
-		var context = canvas.getContext('2d');
-		context.clearRect(0, 0, canvas.width, canvas.height);
-		context.font = '18pt Calibri';
-		context.fillStyle = 'black';
-		context.fillText(message, 10, 25);
-	}
-	
-	function getMousePos(canvas, evt) {
-		var rect = canvas.getBoundingClientRect();
-		return {
-			x: evt.clientX - rect.left,
-			y: evt.clientY - rect.top
-		};
-	}
-	
-	function getTouchPos(canvas, evt) {
-		canvas.getBoundingClientRect();
-		 return {
-			x: evt.touches[0].clientX - rect.left,
-			y: evt.touches[0].clientY - rect.top
-		};
-	}
-	
-	var canvas = document.getElementById('canvas');
-	var context = canvas.getContext('2d');
+    self.canvas = document.getElementById('canvas');
+	self.context = canvas.getContext('2d');
 
-	canvas.addEventListener('mousemove', function(evt) {
+	self.canvas.addEventListener('mousemove', function(evt) {
 		evt.preventDefault();
-		var mousePos = getMousePos(canvas, evt);
-		writeIt(mousePos);
+		var mousePos = self.getMousePos(evt);
+		self.writeIt(mousePos);
+		self.posCalcultion(mousePos);
 	}, false);
 
-	canvas.addEventListener("touchmove", function(evt) {
+	self.canvas.addEventListener("touchmove", function(evt) {
 		evt.preventDefault();
-		console.log(evt);
-		var touch_pos = getTouchPos(canvas, evt);
-		writeIt(touch_pos);
-	}, false);
-
-	function writeIt(mousePos) {
-	var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-	writeMessage(canvas, message);
-	}
-
-	canvas.addEventListener('mousedown', function(evt) {
-	evt.preventDefault();  
-	console.log('clicking the shiz out of me');
+		var touchPos = self.getTouchPos(evt);
+		self.writeIt(touchPos);
+		self.posCalcultion(touchPos);
 	}, false);
 	
-	/*$("#keys").hover(function(){
-		
-		window.onmousemove = self.readMouse;
-		
-	    $(document).keydown(function(event) {
-	        if(event.which == 80) {
-	            self.play();
-	        }
-	    });
+	self.canvas.addEventListener('touchstart', function(evt) {
+		evt.preventDefault();
+		self.play(function() {
+			var touchPos = self.getTouchPos(evt);
+			self.writeIt(touchPos);
+			self.posCalcultion(touchPos);
+		});
+	}, false);
+	
+	self.canvas.addEventListener('touchend', function(evt) {
+		evt.preventDefault();
+		self.stop();
+	}, false);
 
-	    $(document).keyup(function(event) {
-	        if(event.which == 80) {
-	            self.stop();
-	        }
-	    });
-	});*/
-
+	self.canvas.addEventListener('mousedown', function(evt) {
+		evt.preventDefault();
+		self.play(function(){
+			var mousePos = self.getMousePos(evt);
+			self.writeIt(mousePos);
+			self.posCalcultion(mousePos);
+		});
+	}, false);
+	
+	self.canvas.addEventListener('mouseup', function(evt) {
+		evt.preventDefault();
+		self.stop();
+	}, false);
+	
 };
 
-Theremin.prototype.play = function() {
+Theremin.prototype.play = function(callback) {
 
     var self = this;
 
     self.playing = true;
-    if (self.last_level == 0){
-        self.last_level = .5;
+    if (self.lastLevel == 0){
+        self.lastLevel = .5;
     }
-    self.level.gain.value = self.last_level;
+    self.level.gain.value = self.lastLevel;
+	
+	if (typeof callback === "function") {
+		callback();
+	}
+	
 }
 
 
 Theremin.prototype.stop = function() {
-
     var self = this;
-
     self.playing = false;
     self.level.gain.value = 0;
-
+	return true;
 }
 
 
+Theremin.prototype.writeMessage = function(message) {
+	var self = this;
+	self.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
+	self.context.font = '18pt Calibri';
+	self.context.fillStyle = 'black';
+	self.context.fillText(message, 10, 25);
+	return true;
+}
 
-Theremin.prototype.readMouse = function(event) {
 
-    var self = this;
-	
-	if (theremin.playing == true) {
-		
-		var x = event.clientX;
-		var y = event.clientY;
-		
-		
-		//see if we are in the box
-		var box_right = $('#keys').width();
-		var box_left = $('#keys').offset().left;
-		var box_top = $('#keys').offset().top;
-		
-		if (x <= box_right && x >= box_left) {
-			
-			theremin.frequencyConstraint(x)
-			var percent = (theremin.last_y/$(document).height()) * 100;
-			var new_gain = ((100 - Math.round(percent)) * .01);
-			theremin.level.gain.value = new_gain;
+Theremin.prototype.writeIt = function(mousePos) {
+	var self = this;
+	var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+	self.writeMessage(message);
+	return true;
+}
 
-			theremin.last_level = new_gain;
-			theremin.last_y = y;
-			
-		}
 
-	}
+Theremin.prototype.getMousePos = function(evt) {
+	var self = this;
+	var rect = self.canvas.getBoundingClientRect();
+	return {
+		x: evt.clientX - rect.left,
+		y: evt.clientY - rect.top
+	};
+}
 
-};
+
+Theremin.prototype.getTouchPos = function(evt) {
+	var self = this;
+	var rect = self.canvas.getBoundingClientRect();
+	return {
+		x: evt.touches[0].clientX - rect.left,
+		y: evt.touches[0].clientY - rect.top
+	};
+}
+
+
+Theremin.prototype.posCalcultion = function (mousePos) {
+	theremin.frequencyConstraint(mousePos.x);
+}
+
+Theremin.prototype.setGain = function (mousePos) {
+	var percent = (theremin.lastY/$(document).height()) * 100;
+	var new_gain = ((100 - Math.round(percent)) * .01);
+	theremin.level.gain.value = new_gain;
+
+	theremin.lastLevel = new_gain;
+	theremin.lastY = y;
+}
 
 
 Theremin.prototype.setFrequency = function(value) {
@@ -186,18 +202,13 @@ Theremin.prototype.frequencyConstraint = function(event_x) {
     var low_c = 65.41;
     var range = high_b - low_c;
 
-    var x_percentage = (event_x/self.screen_width) * 100;
-    var freq = (range * (x_percentage/100) + low_c);
-	/*console.log("event_x: " + event_x);
-	console.log("x_percentage: " + x_percentage);
-	console.log("range: " + range);
-	console.log("freq: " + freq);*/
+	var percentageX = (event_x/self.canvas.width) * 100;
+    var freq = (range * (percentageX/100) + low_c);
 	
 	if (self.tremolo == true) {
 		
 		min = freq - 3;
 		max = freq + 3;
-		
 		freq = Math.random() * (max - min) + min;
 		
 	}
