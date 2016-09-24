@@ -19,18 +19,18 @@ $(function(){
 
 
 function Theremin() {
-
-    this.context = new AudioContext(); //webkit browsers only
+	
+	this.context = new AudioContext(); //webkit browsers only
 	this.tuna = new Tuna(this.context); //
-    this.oscillator = this.context.createOscillator();
-    this.level = this.context.createGain();
-    this.playing = false;
+	this.oscillator = this.context.createOscillator();
+	this.level = this.context.createGain();
+	this.playing = false;
 	this.screen_width = $( document ).width();
 
-    this.oscillator.type = 'sine'; // sine wave
-    this.oscillator.frequency.value = 440;
-    this.oscillator.start(0);
-    this.level.gain.value = 0;
+	this.oscillator.type = 'sine'; // sine wave
+	this.oscillator.frequency.value = 440;
+	this.oscillator.start(0);
+	this.level.gain.value = 0;
 	
 	this.effects.chorus = new this.tuna.Chorus({
 		rate: 1.5,
@@ -109,7 +109,7 @@ Theremin.prototype.start = function() {
 		self.stop();
 	}, false);
 	
-};
+}
 
 Theremin.prototype.play = function(callback) {
 
@@ -117,7 +117,7 @@ Theremin.prototype.play = function(callback) {
 
     self.playing = true;
     if (self.lastLevel == 0){
-        self.lastLevel = .5;
+        self.lastLevel = 0.5;
     }
     self.level.gain.value = self.lastLevel;
 	
@@ -180,7 +180,7 @@ Theremin.prototype.posCalcultion = function (mousePos) {
 
 Theremin.prototype.setGain = function (mousePos) {
 	var percent = (theremin.lastY/$(document).height()) * 100;
-	var new_gain = ((100 - Math.round(percent)) * .01);
+	var new_gain = ((100 - Math.round(percent)) * 0.01);
 	theremin.level.gain.value = new_gain;
 
 	theremin.lastLevel = new_gain;
