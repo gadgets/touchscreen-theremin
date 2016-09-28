@@ -39,11 +39,9 @@ function Theremin() {
 		bypass: 0
 	});
 	
-    this.oscillator.connect(this.effects.chorus);
-	
+	this.oscillator.connect(this.effects.chorus);
 	this.effects.chorus.connect(this.level);
 	//this.effects.overdrive.connect();
-	
 	this.level.connect(this.context.destination);
 	
 };
