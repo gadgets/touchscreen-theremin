@@ -8,9 +8,7 @@ $(function(){
     theremin = new Theremin();
     theremin.start();
 	
-	console.log($(document).width());
-
-    $(".type-trigger").click(function() {
+	$(".type-trigger").click(function() {
 		var type = $(this).data('type')
 		theremin.oscillator.type = type;
     });
@@ -59,6 +57,8 @@ Theremin.prototype.canvas = null;
 Theremin.prototype.tuna = null;
 Theremin.prototype.effects = {};
 Theremin.prototype.context = 0;
+Theremin.prototype.message = {};
+
 
 Theremin.prototype.start = function() {
 
@@ -136,20 +136,28 @@ Theremin.prototype.stop = function() {
 }
 
 
-Theremin.prototype.writeMessage = function(message) {
+Theremin.prototype.writeMessage = function() {
 	var self = this;
+	
+	var text = "Mouse = X:" + self.message.posx + " Y:" + self.message.posy;
+	
+	if ( ("freq" in self.message) ) {
+		text += " | Frequency: " + self.message.freq;
+	}
+	
 	self.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
 	self.context.font = '18pt Calibri';
 	self.context.fillStyle = 'black';
-	self.context.fillText(message, 10, 25);
+	self.context.fillText(text, 10, 25);
 	return true;
 }
 
 
 Theremin.prototype.writeIt = function(mousePos) {
 	var self = this;
-	var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-	self.writeMessage(message);
+	self.message. posx = mousePos.x;
+	self.message.posy = mousePos.y;
+	self.writeMessage();
 	return true;
 }
 
@@ -182,7 +190,6 @@ Theremin.prototype.setGain = function (mousePos) {
 	var percent = (theremin.lastY/$(document).height()) * 100;
 	var new_gain = ((100 - Math.round(percent)) * .01);
 	theremin.level.gain.value = new_gain;
-
 	theremin.lastLevel = new_gain;
 	theremin.lastY = y;
 }
@@ -214,6 +221,7 @@ Theremin.prototype.frequencyConstraint = function(event_x) {
 	}
 	
     self.oscillator.frequency.value = freq;
+	self.message.freq = freq;
 
 };
 
@@ -223,14 +231,10 @@ Theremin.prototype.addEffect = function() {
 }
 
 
-Theremin.prototype.frequencyList = [
-
-    {
-        freq: 32.70,
-        note: "C1"
-    },
-
-    {
+Theremin.prototype.frequencyList = {
+    32.70: "C1"
+}
+/*    {
         freq: 34.65,
         name: "C#1"
     },
@@ -245,7 +249,7 @@ Theremin.prototype.frequencyList = [
     {
         freq: 41.20,
         name: "E1"
-    }
+    },
     {
         freq: 43.65,
         name: "F1"
@@ -253,8 +257,7 @@ Theremin.prototype.frequencyList = [
     {
     	freq: 46.25,
         name: "F#1/Gb1"
-    }
-    {
+    },
     {
     	freq: 49.00,
         name: "G1"
@@ -278,7 +281,7 @@ Theremin.prototype.frequencyList = [
     {
     	freq: 65.41,
         name: "C2"
-    }
+    }.
     {
     	freq: 69.30,
         name: "C#2/Db2"
@@ -337,27 +340,27 @@ Theremin.prototype.frequencyList = [
     },
     {
     	freq: 155.56,
-	name: "D#3/Eb3"
-    }
+		name: "D#3/Eb3"
+	}.
     {
     	freq: 164.81,
-	name: "E3",
-    }
+		name: "E3",
+    }.
     {
     	freq: 174.61,
-	name: "F3"
-    }
+		name: "F3"
+    }.
     {
     	freq: 185.00,
-	name: "F#3/Gb3"
-    }
+		name: "F#3/Gb3"
+    }.
     {
     	freq: 196.00,
 	name: "G3"
     },
     {
     	freq: 207.65,
-	name: "G#3/Ab3"
+		name: "G#3/Ab3"
     },
     {
     	freq: 220.00,
@@ -377,8 +380,8 @@ Theremin.prototype.frequencyList = [
     },
     {
     	freq: 277.18,
-	name: "C#4/Db4"
-    }
+		name: "C#4/Db4"
+    }.
     {
     	freq: 293.66,
 	name: "D4"
@@ -405,18 +408,18 @@ Theremin.prototype.frequencyList = [
     },
     {
     	freq: 415.30,
-	name: "G#4/Ab4"
+		name: "G#4/Ab4"
     },
     {
     	freq: 440.00,
-	name: "A4"
+		name: "A4"
     },
     {
     	freq: 466.16,
-	name: "A#4/Bb4"
+		name: "A#4/Bb4"
     },
     {
     	freq: 493.88,
-	name: "B4"
+		name: "B4"
     }
-]
+];*/
