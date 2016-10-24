@@ -1,0 +1,12 @@
+<svg width="62" height="47" viewBox="0 0 62 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:figma="http://www.figma.com/figma/ns">
+<title>Triangle</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(516 446)" figma:type="canvas">
+<g id="Triangle" style="mix-blend-mode:normal;" figma:type="vector">
+<use xlink:href="#path0_stroke" transform="translate(-515 -445)" style="mix-blend-mode:normal;"/>
+</g>
+</g>
+<defs>
+<path id="path0_stroke" d="M 17.4194 0L 17.8395 -0.271063L 17.4455 -0.881704L 17.016 -0.295521L 17.4194 0ZM 46.4516 45L 46.0315 45.2711L 46.4539 45.9258L 46.8731 45.269L 46.4516 45ZM 0.403321 24.0691L 17.8227 0.295521L 17.016 -0.295521L -0.403321 23.4781L 0.403321 24.0691ZM 16.9992 0.271063L 46.0315 45.2711L 46.8718 44.7289L 17.8395 -0.271063L 16.9992 0.271063ZM 46.8731 45.269L 60.4215 24.0426L 59.5785 23.5046L 46.0301 44.731L 46.8731 45.269Z"/>
+</defs>
+</svg>

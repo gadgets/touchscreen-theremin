@@ -1,0 +1,12 @@
+<svg width="62" height="47" viewBox="0 0 62 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:figma="http://www.figma.com/figma/ns">
+<title>Saw Tooth</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(275 446)" figma:type="canvas">
+<g id="Saw Tooth" style="mix-blend-mode:normal;" figma:type="vector">
+<use xlink:href="#path0_stroke" transform="translate(-274 -445)" style="mix-blend-mode:normal;"/>
+</g>
+</g>
+<defs>
+<path id="path0_stroke" d="M 7.5 0L 7.84627 -0.360694L 7.37062 -0.817315L 7.05926 -0.236111L 7.5 0ZM 54.375 45L 54.0287 45.3607L 54.6006 45.9097L 54.8497 45.1571L 54.375 45ZM 0.44074 14.2361L 7.94074 0.236111L 7.05926 -0.236111L -0.44074 13.7639L 0.44074 14.2361ZM 7.15373 0.360694L 54.0287 45.3607L 54.7213 44.6393L 7.84627 -0.360694L 7.15373 0.360694ZM 54.8497 45.1571L 60.4747 28.1571L 59.5253 27.8429L 53.9003 44.8429L 54.8497 45.1571Z"/>
+</defs>
+</svg>

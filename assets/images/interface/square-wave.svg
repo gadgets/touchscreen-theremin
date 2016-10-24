@@ -1,0 +1,12 @@
+<svg width="62" height="47" viewBox="0 0 62 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:figma="http://www.figma.com/figma/ns">
+<title>Square</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(398 446)" figma:type="canvas">
+<g id="Square" style="mix-blend-mode:normal;" figma:type="vector">
+<use xlink:href="#path0_stroke" transform="translate(-397 -445)" style="mix-blend-mode:normal;"/>
+</g>
+</g>
+<defs>
+<path id="path0_stroke" d="M 8.95522 0L 8.95522 -0.5L 8.61892 -0.5L 8.49212 -0.188509L 8.95522 0ZM 36.7164 45L 36.2324 45.1252L 36.3293 45.5L 36.7164 45.5L 36.7164 45ZM 25.0746 0L 25.5587 -0.12523L 25.4617 -0.5L 25.0746 -0.5L 25.0746 0ZM 55.5224 45L 55.5224 45.5L 55.9344 45.5L 56.0132 45.0955L 55.5224 45ZM 0.463103 22.1885L 9.41833 0.188509L 8.49212 -0.188509L -0.463103 21.8115L 0.463103 22.1885ZM 8.95522 0.5L 25.0746 0.5L 25.0746 -0.5L 8.95522 -0.5L 8.95522 0.5ZM 24.5906 0.12523L 36.2324 45.1252L 37.2005 44.8748L 25.5587 -0.12523L 24.5906 0.12523ZM 36.7164 45.5L 55.5224 45.5L 55.5224 44.5L 36.7164 44.5L 36.7164 45.5ZM 56.0132 45.0955L 60.4908 22.0955L 59.5092 21.9045L 55.0316 44.9045L 56.0132 45.0955Z"/>
+</defs>
+</svg>
