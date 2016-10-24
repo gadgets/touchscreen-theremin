@@ -10,7 +10,7 @@ body {
 
 body {
     font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    background: #e3e3e3;
+    background: #fff;
     margin: 0px;
     padding: 0px;
     color: #555555;
@@ -55,4 +55,29 @@ body {
 
 .key:hover {
     background-color: #540000;
+}
+
+#controls {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+#meter .ui.item {
+	padding: 0;
+	margin: 0;
+}
+
+.wav.image {
+	width: 3em;
+	height: 2em;
+}
+
+.ui.square.button {
+	width: 7.5em;
+	height: 7.5em;
+}
+
+.ui.octave.button {
+	width: 6em;
+	height: 4em;
 }

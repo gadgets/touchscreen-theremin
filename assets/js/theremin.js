@@ -17,32 +17,21 @@ $(function(){
 
 
 function Theremin() {
+	var self = this;
 
-    this.context = new AudioContext(); //webkit browsers only
-	this.tuna = new Tuna(this.context); //
-    this.oscillator = this.context.createOscillator();
-    this.level = this.context.createGain();
-    this.playing = false;
-	this.screen_width = $( document ).width();
+    self.context = new AudioContext(); //webkit browsers only
+	self.oscillator = this.context.createOscillator();
+    self.level = this.context.createGain();
+    self.playing = false;
+	self.screen_width = $( document ).width();
 
-    this.oscillator.type = 'sine'; // sine wave
-    this.oscillator.frequency.value = 440;
-    this.oscillator.start(0);
-    this.level.gain.value = 0;
+    self.oscillator.type = 'sine'; // sine wave
+    self.oscillator.frequency.value = 440;
+    self.oscillator.start(0);
+    self.level.gain.value = 0;
 	
-	this.effects.chorus = new this.tuna.Chorus({
-		rate: 1.5,
-		feedback: 0.5,
-		delay: 0.0045,
-		bypass: 0
-	});
-	
-    this.oscillator.connect(this.effects.chorus);
-	
-	this.effects.chorus.connect(this.level);
-	//this.effects.overdrive.connect();
-	
-	this.level.connect(this.context.destination);
+	self.oscillator.connect(self.level);
+	self.level.connect(self.context.destination);
 	
 };
 

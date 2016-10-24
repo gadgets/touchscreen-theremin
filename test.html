@@ -11,40 +11,164 @@
 
     <!-- CSS -->
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="assets/css/semantic.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/theremin.css">
-
-    <script type="text/javascript" src="assets/js/jquery-2.2.0.min.js"></script>
-    <script type="text/javascript" src="assets/js/semantic.min.js"></script>
-	<script type="text/javascript" src="assets/js/tuna-min.js"></script>
+	
+    <link rel="stylesheet" type="text/css" href="assets/lib/semantic-ui/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/lib/semantic-ui/components/button.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="assets/css/theremin.css">
+	
+	<script type="text/javascript" src="assets/lib/underscore-min.js"></script>
+	<script type="text/javascript" src="assets/lib/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="assets/lib/semantic-ui/semantic.min.js"></script>
 
 </head>
 <body>
 
-
-    <div class="ui page grid">
-        <div class="row">
-            <div class="column">
-
-                <h1 class="ui header">
-                    Theremin
-                </h1>
-
-                <div class="blue ui buttons">
-                    <div class="ui button type-trigger" data-type="sine">Sine</div>
-                    <div class="ui button type-trigger" data-type="sawtooth">Sawtooth</div>
-                    <div class="ui button type-trigger" data-type="square">Square</div>
-                    <div class="ui button type-trigger" data-type="triangle">Triangle</div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-	
-	<div id="container">
-		<canvas id="canvas" width="1200" height="350"></canvas>
+	<div class="ui container" id="controls">
+		
+		<div class="ui grid">
+			<div class="row">
+				<div class="one wide column">
+					
+					
+					
+					<div class="ui items" id="meter">
+						<div class="ui item" id="10">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="9">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="8">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="7">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="6">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="5">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="4">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="3">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="2">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+						<div class="ui item" id="1">
+							<img class="ui fluid image" src="assets/images/interface/grey-meter-bar.svg" />
+						</div>
+					</div>
+					
+					
+					
+				</div>
+				<div class="bottom aligned six wide column">
+					
+					<h1 class="ui header">SLIDE SYNTH</h1>
+					<div>
+						<button class="ui button type-trigger" data-type="sine">
+							<img class="wav image" src="assets/images/interface/sine-wave.svg" />
+						</button>
+						<button class="ui button type-trigger" data-type="square">
+							<img class="wav image" src="assets/images/interface/square-wave.svg" />
+						</button>
+						<button class="ui button type-trigger" data-type="triangle">
+							<img class="wav image" src="assets/images/interface/triangle-wave.svg" />
+						</button>
+						<button class="ui button type-trigger" data-type="sawtooth">
+							<img class="wav image" src="assets/images/interface/saw-tooth-wave.svg" />
+						</button>
+					</div>
+					
+					
+				</div>
+				<div class="bottom aligned five wide column">
+					
+					
+					<div class="ui grid">
+						<div class="row">
+							<div class="center aligned sixteen wide column">
+								<h4 class="ui header">OCTAVE</h4>
+								<button class="ui octave button">
+									1 - 2
+								</button>
+								<button class="ui octave button">
+									3 - 4
+								</button>
+								<button class="ui octave button">
+									4 - 5
+								</button>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="two wide column">
+					
+					<button class="ui square button" type="button" name="panic" id="panic">
+						PANIC
+					</button>
+					
+					
+				</div>
+				<div class="two wide column">
+					
+					
+					<button class="ui square button" type="button" name="tap" id="tap">
+						TAP/HOLD
+					</button>
+					
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="center aligned sixteen wide column" id="surfaceContainer">
+					<canvas id="canvas" width ="1120" height="350"></canvas>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+					
+		<!--<div class="ui grid">
+			
+			
+			<div class="row">
+				
+				<div class="one wide">
+					
+					
+					
+					
+					
+				</div>
+				<div class="six wide">
+					
+					
+				</div>
+				<div class="three wide">
+					
+				</div>
+				<div class="three wide">
+					
+				</div>
+				<div class="three wide">
+					
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="sixteen wide">
+				
+			</div>
+		</div>
+	</div>
+</div>-->
     <script type="text/javascript" src="assets/js/theremin.js"></script>
 
 </body>
